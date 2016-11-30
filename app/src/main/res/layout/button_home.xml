@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="bottom">
+
+    <Button
+        android:id="@+id/home_button_main"
+        android:layout_width="fill_parent"
+        android:layout_height="90dp"
+        android:textSize="16sp"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:gravity="start|center_vertical"
+        android:paddingStart="90dp"
+        android:background="@drawable/background_primary_dark" />
+
+    <Button
+        android:id="@+id/home_button_icon"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:gravity="center_vertical"
+        android:layout_marginTop="25dp"
+        android:layout_marginStart="25dp" />
+
+    <Button
+        android:id="@+id/home_button_line"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@drawable/shape_gradient_fade"
+        android:layout_marginTop="89dp" />
+
+</RelativeLayout>

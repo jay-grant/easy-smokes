@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">Easy Smokes</string>
+    <string name="app_name_spaced">E A S Y\nS M O K E S</string>
+    <string name="title_activity_levels">Levels</string>
+    <string name="title_activity_nades">Nades</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_tabbed">TabbedActivity</string>
+    <string name="section_format">Hello World from section: %1$d</string>
+    <string name="no_connection">No Connection</string>
+    <string name="add_favs">Add Favourites</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_favs">FavsActivity</string>
+    <string name="title_activity_favourites">FavouritesActivity</string>
+    <string name="title_activity_settings">SettingsActivity</string>
+</resources>
