@@ -14,7 +14,7 @@ import com.crayon.easysmokes.R;
 public class HomeScreenButton {
 
     public HomeScreenButton(String text, final Context context,
-                            final Class cls, LinearLayout layout, int iconResId, int positionCase) {
+                            final Class cls, LinearLayout layout, int iconResId, boolean isBottomLine) {
 
         LayoutInflater layoutInflater = LayoutInflater.from(context);
         View view = layoutInflater.inflate(R.layout.button_home, null);
@@ -22,10 +22,8 @@ public class HomeScreenButton {
         Button buttonIcon = (Button) view.findViewById(R.id.home_button_icon);
         Button buttonLine = (Button) view.findViewById(R.id.home_button_line);
 
-        switch (positionCase) {
-            case 0: break;
-            case 1:
-                buttonLine.setVisibility(View.INVISIBLE);
+        if (isBottomLine) {
+            buttonLine.setVisibility(View.INVISIBLE);
         }
 
         buttonIcon.setBackgroundResource(iconResId);

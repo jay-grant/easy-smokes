@@ -29,6 +29,7 @@ import com.crayon.easysmokes.model.SharedKey;
 public class LevelButton {
 
     private final int BUTTON_ALPHA = 85;
+    private final int BUTTON_ALPHA_PRESS = 225;
     LevelName[] levels = LevelName.values();
 
     public void buildLevels(final Context context, LinearLayout layout) {
@@ -107,14 +108,13 @@ public class LevelButton {
 
             Bundle bundle = new Bundle();
             Intent intent = new Intent(context, cls);
-            int grey = context.getResources().getColor(R.color.colorPrimary);
 
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 switch (event.getAction()) {
                     case MotionEvent.ACTION_DOWN: {
                         Button buttonInstance = (Button) view.findViewById(buttonPress.getId());
-                        buttonInstance.getBackground().setAlpha(225);
+                        buttonInstance.getBackground().setAlpha(BUTTON_ALPHA_PRESS);
                         buttonInstance.invalidate();
                         break;
                     }

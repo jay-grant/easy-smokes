@@ -30,7 +30,12 @@ public class Data {
     };
 
     private static NadeImage[] nadeImages = {
-            new NadeImage("d1", new String[]{"ayylmao.jpg", "gucci", "the_bee_movie"})
+            new NadeImage("d1", new String[]{"http://boredomtherapy.com/wp-content/uploads/2014/05/bad-taxidemy-7.jpg",
+                    "http://www.oddee.com/_media/imgs/articles2/a99361_crappy-taxidermy-2.jpg",
+                    "http://2.bp.blogspot.com/-qxPwhEq6KZk/UcmlkHvz_eI/AAAAAAAACq4/RU_kYFehS7Y/s1600/fox1.JPG"}),
+
+            new NadeImage("m4", new String[]{
+                    "http://2.bp.blogspot.com/-qxPwhEq6KZk/UcmlkHvz_eI/AAAAAAAACq4/RU_kYFehS7Y/s1600/fox1.JPG"})
     };
 
     public static Nade[] getNadeList() {return nades;}

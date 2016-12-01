@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.crayon.easysmokes.builder.AestheticFormat;
 import com.crayon.easysmokes.builder.GetNadeImageHelper;
 import com.crayon.easysmokes.model.BundleKey;
 import com.crayon.easysmokes.model.TouchImageView;
@@ -61,15 +62,17 @@ public class SwipeFragment extends Fragment {
         textView = (TextView) v.findViewById(R.id.textView);
 
 //        Occupy TouchImageView ***************************************************************
-
-        if (isNetworkAvailable()) {
-
-            GetNadeImageHelper.getImages(getContext(), touchImageView, url);
-
-            v.setBackgroundColor(getResources().getColor(R.color.black));
-        } else {
+        if (!isNetworkAvailable()) {
             imageView.setVisibility(View.VISIBLE);
             textView.setVisibility(View.VISIBLE);
+            textView.setText(AestheticFormat.vapour("Connection Error"));
+        } else if (url == null) {
+            imageView.setVisibility(View.VISIBLE);
+            textView.setVisibility(View.VISIBLE);
+            textView.setText(AestheticFormat.vapour("Invalid Image"));
+        } else {
+            GetNadeImageHelper.getImages(getContext(), touchImageView, url);
+            v.setBackgroundColor(getResources().getColor(R.color.black));
         }
 
 //        Return Fragment View

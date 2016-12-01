@@ -51,7 +51,7 @@ public class NadeButton {
             if (level.equals(nadeLevel) &&
                     (side.equals(nadeSide) || SideType.U.toString().equals(nadeSide)))
             {
-                buttonMain.setText(nade.getId());
+                buttonMain.setText(nade.getName() + " : " + nade.getId());
                 listener(context, view, nade, buttonMain);
                 favListener(context, view, nade, buttonFav, notificationHelper, layout);
                 layout.addView(view);
