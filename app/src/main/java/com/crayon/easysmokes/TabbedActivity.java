@@ -9,14 +9,13 @@ import android.widget.TextView;
 import com.crayon.easysmokes.model.BundleKey;
 import com.crayon.easysmokes.model.SideType;
 import com.crayon.easysmokes.model.TabBuilder;
-import com.koushikdutta.ion.Ion;
 
 public class TabbedActivity extends TabActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_tabbed);
+        setContentView(R.layout.activity_tabs);
 
         Bundle bundle = getIntent().getExtras();
         String levelString = (String) bundle.get(String.valueOf(BundleKey.LEVEL));

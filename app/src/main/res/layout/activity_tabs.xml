@@ -4,8 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context=".HomeActivity">
+    tools:context=".TabbedActivity">
 
-    <include layout="@layout/content_home" />
+    <include layout="@layout/structure_tabs" />
 
 </android.support.design.widget.CoordinatorLayout>

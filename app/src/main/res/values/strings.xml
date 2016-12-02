@@ -14,4 +14,5 @@
     <string name="title_activity_favs">FavsActivity</string>
     <string name="title_activity_favourites">FavouritesActivity</string>
     <string name="title_activity_settings">SettingsActivity</string>
+    <string name="title_activity_test">TestActivity</string>
 </resources>
