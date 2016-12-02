@@ -10,7 +10,7 @@ public class Nade {
     private String name;
     private SideType side;
     private NadeType nadeType = NadeType.SMOKE;
-
+    private int favOrder = 0;
 
     public Nade (LevelName levelName, String id, String name, SideType side) {
         this.levelName = levelName;
@@ -28,16 +28,20 @@ public class Nade {
     }
 
     public void addFav(Context context) {
+        SharedPreferences counter = context.getApplicationContext()
+                .getSharedPreferences(String.valueOf(SharedPrefsKey.FAVS_COUNT), Context.MODE_PRIVATE);
         SharedPreferences sharedPrefs = context.getApplicationContext()
-                .getSharedPreferences(String.valueOf(SharedKey.FAVS), Context.MODE_PRIVATE);
+                .getSharedPreferences(String.valueOf(SharedPrefsKey.FAVS), Context.MODE_PRIVATE);
+        int count = sharedPrefs.getAll().size();
+        count++;
         SharedPreferences.Editor editor = sharedPrefs.edit();
-        editor.putBoolean(id, true);
+        editor.putInt(id, count);
         editor.apply();
     }
 
     public void removeFav(Context context) {
         SharedPreferences sharedPrefs = context.getApplicationContext()
-                .getSharedPreferences(String.valueOf(SharedKey.FAVS), Context.MODE_PRIVATE);
+                .getSharedPreferences(String.valueOf(SharedPrefsKey.FAVS), Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPrefs.edit();
         editor.remove(id);
         editor.apply();
@@ -63,4 +67,11 @@ public class Nade {
         return nadeType;
     }
 
+    public int getFavOrder() {
+        return favOrder;
+    }
+
+    public void setFavOrder(int favOrder) {
+        this.favOrder = favOrder;
+    }
 }

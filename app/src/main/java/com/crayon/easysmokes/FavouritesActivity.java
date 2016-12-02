@@ -1,5 +1,6 @@
 package com.crayon.easysmokes;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -14,10 +15,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
-import com.crayon.easysmokes.builder.LevelButton;
+import com.crayon.easysmokes.builder.FavNadeButton;
 import com.crayon.easysmokes.data.Data;
 import com.crayon.easysmokes.model.Nade;
-import com.crayon.easysmokes.model.SharedKey;
+import com.crayon.easysmokes.model.SharedPrefsKey;
 
 public class FavouritesActivity extends AppCompatActivity {
 
@@ -27,7 +28,7 @@ public class FavouritesActivity extends AppCompatActivity {
         setContentView(R.layout.activity_favourites);
 
         final SharedPreferences sharedPreferences = this.getApplicationContext()
-                .getSharedPreferences(String.valueOf(SharedKey.FAVS), Context.MODE_PRIVATE);
+                .getSharedPreferences(String.valueOf(SharedPrefsKey.FAVS), Context.MODE_PRIVATE);
 
 
         final LinearLayout layout = (LinearLayout) findViewById(R.id.favouritesActivity_ScrollView);
@@ -53,7 +54,7 @@ public class FavouritesActivity extends AppCompatActivity {
         if (isFavEmpty(sharedPreferences)) {
             fab.setVisibility(View.GONE);
         } else {
-            new LevelButton().buildFavourites(this, layout);
+            new FavNadeButton().buildFavourites(this, layout);
             button.setVisibility(View.GONE);
         }
 
@@ -71,13 +72,11 @@ public class FavouritesActivity extends AppCompatActivity {
 
                 finish();
                 startActivity(new Intent(context, FavouritesActivity.class));
-                //TODO
                 dialog.dismiss();
             }
         });
         builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
-                //TODO
                 dialog.dismiss();
             }
         });
@@ -88,7 +87,7 @@ public class FavouritesActivity extends AppCompatActivity {
     private boolean isFavEmpty(SharedPreferences sharedPrefs) {
         int i = 0;
         for (Nade nade :
-                Data.getNadeList()) {
+                Data.getNadesList()) {
             String nadeID = nade.getId();
             if (sharedPrefs.contains(nadeID)) {
                 i += 1;
@@ -97,4 +96,27 @@ public class FavouritesActivity extends AppCompatActivity {
         return !(i>0);
     }
 
+    public static void removeFavouriteDialog(final Context context,
+                                             final SharedPreferences sharedPreferences, final Nade nade) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        LayoutInflater layoutInflater = LayoutInflater.from(context);
+        View view = layoutInflater.inflate(R.layout.dialog_remove_single_fav, null);
+        builder.setCustomTitle(view);
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                Activity owner = (Activity) context;
+                owner.finish();
+                sharedPreferences.edit().remove(nade.getId()).apply();
+                owner.startActivity(new Intent(context, FavouritesActivity.class));
+                dialog.dismiss();
+            }
+        });
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                dialog.dismiss();
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
 }

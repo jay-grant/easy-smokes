@@ -8,6 +8,9 @@
     <string name="section_format">Hello World from section: %1$d</string>
     <string name="no_connection">No Connection</string>
     <string name="add_favs">Add Favourites</string>
+    <string name="del_favs">Remove ALL Favourites ?</string>
+    <string name="del_single_fav">Remove Favourite?</string>
+    <string name="cache_setting_label">Automatically Cache Favourites</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

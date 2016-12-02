@@ -8,6 +8,13 @@ import com.crayon.easysmokes.model.Nade;
 import com.crayon.easysmokes.model.NadeImage;
 import com.crayon.easysmokes.model.SideType;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
 public class Data {
 
     private static Nade[] nades = {
@@ -31,7 +38,18 @@ public class Data {
             })
     };
 
-    public static Nade[] getNadeList() {return nades;}
+    public static Nade[] getNadesList() {
+        return nades;
+    }
+
+    public static Map<String, Nade> getNadesMap() {
+        Map<String, Nade> nadesMap = new HashMap<>();
+        for (Nade nade :
+                nades) {
+            nadesMap.put(nade.getId(), nade);
+        }
+        return nadesMap;
+    }
 
     public static NadeImage getNadeImage(String id) {
 

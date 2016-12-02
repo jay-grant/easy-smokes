@@ -17,7 +17,7 @@ import com.crayon.easysmokes.animation.NotificationHelper;
 import com.crayon.easysmokes.data.Data;
 import com.crayon.easysmokes.model.BundleKey;
 import com.crayon.easysmokes.model.Nade;
-import com.crayon.easysmokes.model.SharedKey;
+import com.crayon.easysmokes.model.SharedPrefsKey;
 import com.crayon.easysmokes.model.SideType;
 
 public class NadeButton {
@@ -30,13 +30,13 @@ public class NadeButton {
 
         layout.removeAllViews();
         SharedPreferences sharedPrefs = context.getApplicationContext()
-                .getSharedPreferences(String.valueOf(SharedKey.FAVS), Context.MODE_PRIVATE);
+                .getSharedPreferences(String.valueOf(SharedPrefsKey.FAVS), Context.MODE_PRIVATE);
 
         this.level = level;
         this.side = side;
 
         for (final Nade nade:
-                Data.getNadeList()) {
+                Data.getNadesList()) {
 
             LayoutInflater layoutInflater = LayoutInflater.from(context);
             View view = layoutInflater.inflate(R.layout.button_nade, null);
@@ -119,7 +119,7 @@ public class NadeButton {
 
             int grey = context.getResources().getColor(R.color.colorPrimary);
             SharedPreferences sharedPrefs = context.getApplicationContext()
-                    .getSharedPreferences(String.valueOf(SharedKey.FAVS), Context.MODE_PRIVATE);
+                    .getSharedPreferences(String.valueOf(SharedPrefsKey.FAVS), Context.MODE_PRIVATE);
             int greenNoti = context.getResources().getIdentifier
                     ("shape_notification_green", "drawable", context.getPackageName());
             int redNoti = context.getResources().getIdentifier

@@ -3,18 +3,13 @@ package com.crayon.easysmokes.builder;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
-import android.graphics.ColorFilter;
-import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
-import android.media.Image;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.GridLayout;
 import android.widget.LinearLayout;
 
 import com.crayon.easysmokes.R;
@@ -24,11 +19,11 @@ import com.crayon.easysmokes.data.Data;
 import com.crayon.easysmokes.model.BundleKey;
 import com.crayon.easysmokes.model.LevelName;
 import com.crayon.easysmokes.model.Nade;
-import com.crayon.easysmokes.model.SharedKey;
+import com.crayon.easysmokes.model.SharedPrefsKey;
 
 public class LevelButton {
 
-    private final int BUTTON_ALPHA = 85;
+    private final int BUTTON_ALPHA = 100;
     private final int BUTTON_ALPHA_PRESS = 225;
     LevelName[] levels = LevelName.values();
 
@@ -63,40 +58,6 @@ public class LevelButton {
             listener(context, view, levelNameString, buttonLine, buttonMain, TabbedActivity.class);
 
             layout.addView(view);
-        }
-    }
-
-    public void buildFavourites(final Context context, LinearLayout layout) {
-
-        ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT, new DisplayPixelScale().getDP(90, context)
-        );
-
-        for (final Nade nade:
-                Data.getNadeList()) {
-
-            SharedPreferences sharedPrefs = context.getApplicationContext()
-                    .getSharedPreferences(String.valueOf(SharedKey.FAVS), Context.MODE_PRIVATE);
-
-            if (sharedPrefs.contains(nade.getId()))
-            {
-                Button nadeButton = new Button(context);
-                nadeButton.setText(nade.getId());
-                nadeButton.setLayoutParams(layoutParams);
-
-                nadeButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent intent = new Intent(context, SwipeLauncher.class);
-                        Bundle bundle = new Bundle();
-                        bundle.putString(String.valueOf(BundleKey.NADEID), nade.getId());
-                        intent.putExtras(bundle);
-                        context.startActivity(intent);
-                    }
-                });
-
-                layout.addView(nadeButton);
-            }
         }
     }
 
