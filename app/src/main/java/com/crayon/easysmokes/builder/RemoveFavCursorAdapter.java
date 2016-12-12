@@ -66,6 +66,10 @@ public class RemoveFavCursorAdapter extends CursorAdapter {
         }
         textMain.setText(AestheticFormat.vapour(nadeName));
 
+        if (queue.contains(nadeID)) {
+            checkBox.setChecked(true);
+        }
+
         checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {

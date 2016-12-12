@@ -70,9 +70,11 @@ public class RemoveFavouritesOptionPopup {
                         queue) {
                     database.removeFavourite(nadeID);
                 }
-                if (queue.size() == favCount) {
+                popupWindow.dismiss();
+                if (queue.size() >= favCount) {
                     ((RemoveFavouritesActivity) context).finish();
                 }
+                queue.clear();
                 ((RemoveFavouritesActivity) context).recreate();
             }
         });

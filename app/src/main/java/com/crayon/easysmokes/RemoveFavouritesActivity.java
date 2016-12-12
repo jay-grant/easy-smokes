@@ -16,6 +16,7 @@ import com.crayon.easysmokes.builder.DisplayPixelScale;
 import com.crayon.easysmokes.builder.RemoveFavCursorAdapter;
 import com.crayon.easysmokes.builder.favouritesbuilder.RemoveFavouritesOptionPopup;
 import com.crayon.easysmokes.data.DataBase;
+import com.crayon.easysmokes.data.sqlimports.NadeData;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +32,7 @@ public class RemoveFavouritesActivity extends AppCompatActivity {
         final Cursor cursor = dataBase.getFavourites();
         final int count = cursor.getCount();
         RemoveFavCursorAdapter adapter = new RemoveFavCursorAdapter(this, cursor, queue);
-        listView.setAdapter(adapter);;
+        listView.setAdapter(adapter);
     }
 
     @Override
@@ -43,6 +44,9 @@ public class RemoveFavouritesActivity extends AppCompatActivity {
         final DataBase dataBase = new DataBase(this);
         final Cursor cursor = dataBase.getFavourites();
         final int count = cursor.getCount();
+
+        System.out.println("FAVOURITES COUNT: " + count);
+
         RemoveFavCursorAdapter adapter = new RemoveFavCursorAdapter(this, cursor, queue);
         listView.setAdapter(adapter);
 
@@ -52,17 +56,17 @@ public class RemoveFavouritesActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-//                showPopup(view, listView, dataBase, count);
+                showPopup(view, listView, dataBase, count);
 
                 //TODO change this to a popup menu with 'remove' and 'select all' options. Ensure 'remove' produces a dialog
-                for (String nadeID :
-                        queue) {
-                    dataBase.removeFavourite(nadeID);
-                }
-                if (queue.size() >= count+1) {
-                    finish();
-                }
-                recreate();
+//                for (String nadeID :
+//                        queue) {
+//                    dataBase.removeFavourite(nadeID);
+//                }
+//                if (queue.size() >= count+1) {
+//                    finish();
+//                }
+//                recreate();
             }
         });
     }
