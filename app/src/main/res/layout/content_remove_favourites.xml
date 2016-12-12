@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/content_remove_favourites"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.crayon.easysmokes.RemoveFavouritesActivity"
+    tools:showIn="@layout/activity_remove_favourites"
+    android:background="@color/colorPrimaryDark" >
+
+    <ListView
+        android:id="@+id/remove_favourites_listview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    </ListView>
+
+</RelativeLayout>

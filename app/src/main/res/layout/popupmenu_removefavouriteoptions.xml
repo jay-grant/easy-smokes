@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@color/favOptionsPrimary"
+    android:layout_margin="0sp"
+    android:gravity="start">
+
+    <RelativeLayout
+        android:id="@+id/RemoveFavOptions_selectall"
+        android:layout_width="180sp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginStart="16sp"
+        android:layout_marginEnd="16sp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16sp"
+            android:text="@string/remfavoption_select"
+            android:textColor="@color/white"
+            android:textAlignment="textStart"
+            android:textAllCaps="false"
+            android:padding="16sp"/>
+        <ImageView
+            android:layout_centerVertical="true"
+            android:layout_alignParentEnd="true"
+            android:layout_width="25sp"
+            android:layout_height="25sp"
+            android:src="@drawable/ic_check_box_white"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/RemoveFavOptions_remove"
+        android:layout_width="180sp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_marginStart="16sp"
+        android:layout_marginEnd="16sp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16sp"
+            android:text="@string/remfavoption_delete"
+            android:textColor="@color/white"
+            android:textAlignment="textStart"
+            android:textAllCaps="false"
+            android:padding="16sp"/>
+        <ImageView
+            android:layout_centerVertical="true"
+            android:layout_alignParentEnd="true"
+            android:layout_width="25sp"
+            android:layout_height="25sp"
+            android:src="@android:drawable/ic_delete"/>
+    </RelativeLayout>
+
+</LinearLayout>

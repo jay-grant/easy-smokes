@@ -51,6 +51,15 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.crayon.easysmokes.HomeActivity" />
         </activity>
+        <activity
+            android:name=".RemoveFavouritesActivity"
+            android:label="@string/title_activity_remove_favourites"
+            android:parentActivityName=".FavouritesActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.crayon.easysmokes.FavouritesActivity" />
+        </activity>
     </application>
 
 </manifest>

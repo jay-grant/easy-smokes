@@ -10,17 +10,14 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.crayon.easysmokes.LevelsActivity"
-    android:background="@color/colorPrimaryDark">
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/LevelsActivity_ScrollView"
-            android:orientation="vertical">
+    android:background="@color/colorPrimaryDark"
+    android:orientation="vertical">
 
-        </LinearLayout>
-    </ScrollView>
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/LevelsActivity_ListView"
+        android:orientation="vertical">
+    </ListView>
 
 </LinearLayout>

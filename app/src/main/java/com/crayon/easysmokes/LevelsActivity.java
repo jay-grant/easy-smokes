@@ -1,10 +1,16 @@
 package com.crayon.easysmokes;
 
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.widget.LinearLayout;
+import android.widget.ListView;
 
-import com.crayon.easysmokes.builder.LevelButton;
+import com.crayon.easysmokes.builder.LevelCursorAdapter;
+import com.crayon.easysmokes.builder.NadeCursorAdapter;
+import com.crayon.easysmokes.data.DataBase;
+import com.crayon.easysmokes.data.sqlimports.LevelData;
+import com.crayon.easysmokes.data.sqlimports.NadeData;
 
 public class LevelsActivity extends AppCompatActivity {
 
@@ -13,9 +19,13 @@ public class LevelsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_levels);
 
-        LinearLayout layout = (LinearLayout) findViewById(R.id.LevelsActivity_ScrollView);
+        ListView listView = (ListView) findViewById(R.id.LevelsActivity_ListView);
 
-        new LevelButton().buildLevels(this, layout);
+        DataBase database = new DataBase(this);
+        SQLiteDatabase readable = database.getReadableDatabase();
+        Cursor cursor = readable.rawQuery("SELECT * FROM " + LevelData.TABLE_NAME, null);
+        LevelCursorAdapter adapter = new LevelCursorAdapter(this, cursor);
+        listView.setAdapter(adapter);
     }
 
 }

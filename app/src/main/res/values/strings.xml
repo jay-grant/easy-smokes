@@ -7,15 +7,22 @@
     <string name="title_activity_tabbed">TabbedActivity</string>
     <string name="section_format">Hello World from section: %1$d</string>
     <string name="no_connection">No Connection</string>
-    <string name="add_favs">Add Favourites</string>
+    <string name="add_favs">a d d _ f a v o u r i t e s</string>
     <string name="del_favs">Remove ALL Favourites ?</string>
     <string name="del_single_fav">Remove Favourite?</string>
     <string name="cache_setting_label">Automatically Cache Favourites</string>
+    <string name="favoption_group">G r o u p i n g</string>
+    <string name="favoption_order">O r d e r</string>
+    <string name="favoption_remove">R e m o v e</string>
+    <string name="remfavoption_select">S e l e c t _ a l l</string>
+    <string name="remfavoption_delete">D e l e t e</string>
+
 
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="hello_blank_fragment">Hello bzlank fragment</string>
     <string name="title_activity_favs">FavsActivity</string>
     <string name="title_activity_favourites">FavouritesActivity</string>
     <string name="title_activity_settings">SettingsActivity</string>
     <string name="title_activity_test">TestActivity</string>
+    <string name="title_activity_remove_favourites">RemoveFavouritesActivity</string>
 </resources>

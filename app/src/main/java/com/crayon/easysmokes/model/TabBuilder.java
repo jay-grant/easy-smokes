@@ -3,12 +3,12 @@ package com.crayon.easysmokes.model;
 public class TabBuilder {
 
     String dispName;
-    SideType side;
+    String sideID;
     int colour;
 
-    public TabBuilder(String dispName, SideType side, int colour) {
+    public TabBuilder(String dispName, String sideID, int colour) {
         this.dispName = dispName;
-        this.side = side;
+        this.sideID = sideID;
         this.colour = colour;
     }
 
@@ -16,8 +16,8 @@ public class TabBuilder {
         return dispName;
     }
 
-    public SideType getSide() {
-        return side;
+    public String getSide() {
+        return sideID;
     }
 
     public int getColour() {

@@ -11,5 +11,8 @@
     <color name="ctBlue">#3399ff</color>
     <color name="notiGreen">#006600</color>
     <color name="notiRed">#660000</color>
+    <color name="strongRed">#990000</color>
+
+    <color name="favOptionsPrimary">#282828</color>
 
 </resources>

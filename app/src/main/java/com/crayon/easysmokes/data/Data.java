@@ -2,12 +2,18 @@ package com.crayon.easysmokes.data;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 
 import com.crayon.easysmokes.model.LevelName;
 import com.crayon.easysmokes.model.Nade;
 import com.crayon.easysmokes.model.NadeImage;
 import com.crayon.easysmokes.model.SideType;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -17,51 +23,49 @@ import java.util.Set;
 
 public class Data {
 
-    private static Nade[] nades = {
-            new Nade(LevelName.DUST2, "d1", "ct_bedroom", SideType.CT),
-            new Nade(LevelName.MIRAGE, "m1", "ayylmao", SideType.U),
-            new Nade(LevelName.MIRAGE, "m4", "ct_bedroom", SideType.T)
-    };
+    /**
+     * Returns a List of Strings where each string represents a semi-colon-separated
+     * 'block' of raw text within a resource file.
+     *
+     * @param resource a resource id
+     * @return a List of Strings
+     */
+    public static List<String> readBlocks(int resource, Context context) {
+        BufferedInputStream bufferedStream = new BufferedInputStream(context.getResources().openRawResource(resource));
+        List<String> blocks = new ArrayList<>();
 
-    private static NadeImage[] nadeImages = {
-            new NadeImage("d1", new String[]{"http://boredomtherapy.com/wp-content/uploads/2014/05/bad-taxidemy-7.jpg",
-                    "http://www.oddee.com/_media/imgs/articles2/a99361_crappy-taxidermy-2.jpg",
-                    "http://2.bp.blogspot.com/-qxPwhEq6KZk/UcmlkHvz_eI/AAAAAAAACq4/RU_kYFehS7Y/s1600/fox1.JPG"
-            }),
+        try {
+            byte[] buffer = new byte[bufferedStream.available()];
 
-            new NadeImage("m4", new String[]{
-                    "http://2.bp.blogspot.com/-qxPwhEq6KZk/UcmlkHvz_eI/AAAAAAAACq4/RU_kYFehS7Y/s1600/fox1.JPG"
-            }),
+            if (bufferedStream.read(buffer) != 0) {
+                String contents = new String(buffer);
+                blocks = new ArrayList<>();
 
-            new NadeImage("m1", new String[] {
-                    "http://www.oddee.com/_media/imgs/articles2/a99361_crappy-taxidermy-2.jpg"
-            })
-    };
-
-    public static Nade[] getNadesList() {
-        return nades;
-    }
-
-    public static Map<String, Nade> getNadesMap() {
-        Map<String, Nade> nadesMap = new HashMap<>();
-        for (Nade nade :
-                nades) {
-            nadesMap.put(nade.getId(), nade);
-        }
-        return nadesMap;
-    }
-
-    public static NadeImage getNadeImage(String id) {
-
-        NadeImage nadeImage = null;
-
-        for (NadeImage nade :
-                nadeImages) {
-            if (id.equals(nade.getId())){
-                nadeImage = nade;
+                Collections.addAll(blocks, contents.split(";"));
             }
+            bufferedStream.close();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-        return nadeImage;
+
+        return blocks;
     }
 
+    public static List<String> readRows(int resource, Context context) {
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader
+                (new BufferedInputStream(context.getResources().openRawResource(resource))));
+        List<String> content = new ArrayList<>();
+
+        try {
+            bufferedReader.readLine();
+            String line = bufferedReader.readLine();
+            while (line != null) {
+                content.add(line);
+                line = bufferedReader.readLine();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return content;
+    }
 }

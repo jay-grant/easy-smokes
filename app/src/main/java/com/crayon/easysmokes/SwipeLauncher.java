@@ -1,6 +1,7 @@
 package com.crayon.easysmokes;
 
 import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -8,16 +9,19 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 
 import com.crayon.easysmokes.data.Data;
+import com.crayon.easysmokes.data.DataBase;
+import com.crayon.easysmokes.data.sqlimports.DemoData;
 import com.crayon.easysmokes.model.BundleKey;
 import com.crayon.easysmokes.model.NadeImage;
 import com.crayon.easysmokes.model.PagerAdapter;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 public class SwipeLauncher extends FragmentActivity {
 
     ViewPager viewPager;
-    ArrayList<String> urls = new ArrayList<>();
     boolean networkCheck;
 
     @Override
@@ -26,31 +30,25 @@ public class SwipeLauncher extends FragmentActivity {
         setContentView(R.layout.activity_swipe_launcher);
 
         Bundle bundle = getIntent().getExtras();
+        String nadeID = bundle.getString(String.valueOf(BundleKey.NADEID));
 
-        NadeImage nadeImage = Data.getNadeImage(bundle.getString(String.valueOf(BundleKey.NADEID)));
+        DataBase database = new DataBase(this);
+        int numberDemos = database.countDemos(nadeID);
 
-        if (nadeImage != null) {
-            urls = nadeImage.getUrlArray();
-        } else {
-            urls = null;
-        }
-
-        networkCheck = isNetworkAvailable();
-
-        bundle.putStringArrayList(String.valueOf(BundleKey.URLLIST), urls);
-        bundle.putBoolean(String.valueOf(BundleKey.NETWORK), networkCheck);
+        bundle.putInt(String.valueOf(BundleKey.NUMBER_DEMOS), numberDemos);
+        bundle.putString(String.valueOf(BundleKey.NADEID), nadeID);
+        bundle.putBoolean(String.valueOf(BundleKey.NETWORK), isNetworkAvailable(this));
 
         viewPager = (ViewPager) findViewById(R.id.swipeLauncher_pager);
         PagerAdapter pagerAdapter = new PagerAdapter(getSupportFragmentManager(), bundle);
         viewPager.setAdapter(pagerAdapter);
     }
 
-    private boolean isNetworkAvailable() {
+    public static boolean isNetworkAvailable(Context context) {
         ConnectivityManager connectivityManager
-                = (ConnectivityManager) this.getApplicationContext()
+                = (ConnectivityManager) context.getApplicationContext()
                 .getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
         return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
-
 }

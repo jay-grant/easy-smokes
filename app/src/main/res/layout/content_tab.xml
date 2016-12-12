@@ -9,18 +9,12 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.crayon.easysmokes.TabContent"
     android:background="@color/colorPrimaryDark">
-    <ScrollView
+
+    <ListView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/tabContent_ScrollView"
-            android:orientation="vertical" >
-
-        </LinearLayout>
-    </ScrollView>
+        android:layout_height="wrap_content"
+        android:id="@+id/tabContent_ListView">
+    </ListView>
 
     <TextView
         android:gravity="center"

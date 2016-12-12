@@ -6,6 +6,7 @@ import android.widget.LinearLayout;
 
 import com.crayon.easysmokes.builder.AestheticFormat;
 import com.crayon.easysmokes.builder.HomeScreenButton;
+import com.crayon.easysmokes.data.DataBase;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -27,5 +28,7 @@ public class HomeActivity extends AppCompatActivity {
         new HomeScreenButton(AestheticFormat.vapour("Favourites"), this, FavouritesActivity.class, layout, R.drawable.ic_home_favourites, false);
         new HomeScreenButton(AestheticFormat.vapour("Settings"), this, SettingsActivity.class, layout, R.drawable.ic_home_settings, true);
 
+        DataBase dataBase = new DataBase(this);
+//        dataBase.printTables();
     }
 }

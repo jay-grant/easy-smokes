@@ -1,12 +1,13 @@
 package com.crayon.easysmokes;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,21 +16,20 @@ import android.widget.TextView;
 
 import com.crayon.easysmokes.builder.AestheticFormat;
 import com.crayon.easysmokes.builder.GetNadeImageHelper;
+import com.crayon.easysmokes.data.DataBase;
+import com.crayon.easysmokes.data.sqlimports.DemoData;
 import com.crayon.easysmokes.model.BundleKey;
 import com.crayon.easysmokes.model.TouchImageView;
-import com.koushikdutta.ion.Ion;
-import com.koushikdutta.ion.bitmap.IonBitmapCache;
-import com.koushikdutta.urlimageviewhelper.UrlImageViewHelper;
 
 import java.util.ArrayList;
-
+import java.util.List;
 
 
 public class SwipeFragment extends Fragment {
 
     TouchImageView touchImageView;
-    ImageView imageView;
-    TextView textView;
+    ImageView alertImage;
+    TextView alertText;
 
     ViewGroup.LayoutParams layoutParamsMatchParent
             = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
@@ -45,46 +45,54 @@ public class SwipeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        String url = null;
+        String url;
+        String nadeID;
         Bundle bundle = getArguments();
-        ArrayList<String> urls = bundle.getStringArrayList(String.valueOf(BundleKey.URLLIST));
-        int pos = bundle.getInt(String.valueOf(BundleKey.FRAGMENTPOS));
 
-        if (urls != null) {
-            url = urls.get(pos);
-        }
+        nadeID = bundle.getString(String.valueOf(BundleKey.NADEID));
+
+        DataBase database = new DataBase(this.getContext());
+        List<String> titles = database.selectFromWhere(DemoData.ATT_TITLE, DemoData.TABLE_NAME, DemoData.ATT_NADE, DataBase.toSQLString(nadeID));
+        List<String> descriptions = database.selectFromWhere(DemoData.ATT_DESC, DemoData.TABLE_NAME, DemoData.ATT_NADE, DataBase.toSQLString(nadeID));
+        List<String> urls = database.selectFromWhere(DemoData.ATT_IMG, DemoData.TABLE_NAME, DemoData.ATT_NADE, DataBase.toSQLString(nadeID));
+
+        // This is out index for which demo we are up to
+        int pos = bundle.getInt(String.valueOf(BundleKey.FRAGMENTPOS));
 
         View v;
         v = inflater.inflate(R.layout.fragment_swipe,container,false);
         touchImageView =
                 (TouchImageView) v.findViewById(R.id.swipeFragment_TouchImageView);
-        imageView = (ImageView) v.findViewById(R.id.imageView);
-        textView = (TextView) v.findViewById(R.id.textView);
+        alertImage = (ImageView) v.findViewById(R.id.imageView);
+        alertText = (TextView) v.findViewById(R.id.textView);
+        alertImage.setColorFilter(Color.parseColor("#ffcc33"), PorterDuff.Mode.SRC_ATOP);
 
-//        Occupy TouchImageView ***************************************************************
-        if (!isNetworkAvailable()) {
-            imageView.setVisibility(View.VISIBLE);
-            textView.setVisibility(View.VISIBLE);
-            textView.setText(AestheticFormat.vapour("Connection Error"));
-        } else if (url == null) {
-            imageView.setVisibility(View.VISIBLE);
-            textView.setVisibility(View.VISIBLE);
-            textView.setText(AestheticFormat.vapour("Invalid Image"));
+        if (urls != null && !urls.isEmpty()) {
+            url = urls.get(pos);
         } else {
-            GetNadeImageHelper.getImages(getContext(), touchImageView, url);
-            v.setBackgroundColor(getResources().getColor(R.color.black));
+            showAlertIcon("no images found");
+            return v;
         }
 
-//        Return Fragment View
+        if (!SwipeLauncher.isNetworkAvailable(this.getContext())) {
+            showAlertIcon("connection error");
+            return v;
+        }
+
+        if (url == null || url.isEmpty() || url.equals("")) {
+            showAlertIcon("invalid image");
+            return v;
+        }
+
+        GetNadeImageHelper.getImages(getContext(), touchImageView, url);
+        v.setBackgroundColor(getResources().getColor(R.color.black));
         return v;
     }
 
-    private boolean isNetworkAvailable() {
-        ConnectivityManager connectivityManager
-                = (ConnectivityManager) getContext().getApplicationContext()
-                .getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
-        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+    private void showAlertIcon(String text) {
+        alertImage.setVisibility(View.VISIBLE);
+        alertText.setVisibility(View.VISIBLE);
+        alertText.setText(AestheticFormat.vapour(text));
     }
 
 }
