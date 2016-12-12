@@ -14,5 +14,6 @@
     <color name="strongRed">#990000</color>
 
     <color name="favOptionsPrimary">#282828</color>
+    <color name="favOptionsOptions">#404040</color>
 
 </resources>

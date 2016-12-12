@@ -25,6 +25,7 @@
             android:textAllCaps="false"
             android:padding="16sp"/>
         <ImageView
+            android:id="@+id/FavouriteOption_ordericon"
             android:layout_centerVertical="true"
             android:layout_alignParentEnd="true"
             android:layout_width="25sp"
@@ -50,6 +51,7 @@
             android:textAllCaps="false"
             android:padding="16sp"/>
         <ImageView
+            android:id="@+id/FavouriteOption_groupicon"
             android:layout_centerVertical="true"
             android:layout_alignParentEnd="true"
             android:layout_width="25sp"

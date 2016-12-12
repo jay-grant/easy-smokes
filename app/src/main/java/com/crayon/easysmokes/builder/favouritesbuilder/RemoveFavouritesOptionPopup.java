@@ -66,12 +66,17 @@ public class RemoveFavouritesOptionPopup {
         deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                boolean shutdown = false;
+                System.out.println("QUEUE SIZE, FAVCOUNT: " + queue.size() + ", " + favCount);
+                if (queue.size() >= favCount) {
+                    shutdown = true;
+                }
                 for (String nadeID :
                         queue) {
                     database.removeFavourite(nadeID);
                 }
                 popupWindow.dismiss();
-                if (queue.size() >= favCount) {
+                if (shutdown) {
                     ((RemoveFavouritesActivity) context).finish();
                 }
                 queue.clear();

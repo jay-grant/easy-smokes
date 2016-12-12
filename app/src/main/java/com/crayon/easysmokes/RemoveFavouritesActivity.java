@@ -45,8 +45,6 @@ public class RemoveFavouritesActivity extends AppCompatActivity {
         final Cursor cursor = dataBase.getFavourites();
         final int count = cursor.getCount();
 
-        System.out.println("FAVOURITES COUNT: " + count);
-
         RemoveFavCursorAdapter adapter = new RemoveFavCursorAdapter(this, cursor, queue);
         listView.setAdapter(adapter);
 

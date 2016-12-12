@@ -74,9 +74,9 @@ public class RemoveFavCursorAdapter extends CursorAdapter {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if (b) {
-                    queue.add(nadeID);
+                    addToQueue(nadeID);
                 } else {
-                    queue.remove(nadeID);
+                    removeFromQueue(nadeID);
                 }
             }
         });
@@ -90,13 +90,25 @@ public class RemoveFavCursorAdapter extends CursorAdapter {
 
     }
 
+    private void addToQueue(String nadeID) {
+        if (!queue.contains(nadeID)) {
+            queue.add(nadeID);
+        }
+    }
+
+    private void removeFromQueue(String nadeID) {
+        if (queue.contains(nadeID)) {
+            queue.remove(nadeID);
+        }
+    }
+
     private void handleCheck(CheckBox checkBox, String nadeID) {
         if (checkBox.isChecked()) {
             checkBox.setChecked(false);
-            queue.remove(nadeID);
+            removeFromQueue(nadeID);
         } else {
             checkBox.setChecked(true);
-            queue.add(nadeID);
+            addToQueue(nadeID);
         }
     }
 }

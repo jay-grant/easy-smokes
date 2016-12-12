@@ -9,10 +9,12 @@ import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
@@ -20,6 +22,8 @@ import android.widget.RelativeLayout;
 import com.crayon.easysmokes.builder.DisplayPixelScale;
 import com.crayon.easysmokes.builder.FavCursorAdapter;
 import com.crayon.easysmokes.builder.favouritesbuilder.FavouritesOptionPopup;
+import com.crayon.easysmokes.builder.favouritesbuilder.GroupOptionsPopup;
+import com.crayon.easysmokes.builder.favouritesbuilder.OrderOptionsPopup;
 import com.crayon.easysmokes.data.Data;
 import com.crayon.easysmokes.data.DataBase;
 import com.crayon.easysmokes.model.Nade;
@@ -73,12 +77,57 @@ public class FavouritesActivity extends AppCompatActivity {
         });
     }
 
-    public void showPopup(View v, boolean hasFavs) {
-        PopupWindow popupWindow = new FavouritesOptionPopup(this, v, hasFavs).getPopup();
+    public void showPopup(final View v, boolean hasFavs) {
+        final PopupWindow popupWindow = new FavouritesOptionPopup(this, v, hasFavs).getPopup();
 
+        final RelativeLayout orderButton = (RelativeLayout) popupWindow.getContentView().findViewById(R.id.FavouriteOption_order);
+        final RelativeLayout groupButton = (RelativeLayout) popupWindow.getContentView().findViewById(R.id.FavouriteOption_group);
+        final ImageView orderIcon = (ImageView) popupWindow.getContentView().findViewById(R.id.FavouriteOption_ordericon);
+        final ImageView groupIcon = (ImageView) popupWindow.getContentView().findViewById(R.id.FavouriteOption_groupicon);
         int xoff = DisplayPixelScale.getDP(-170, this);
         int yoff = DisplayPixelScale.getDP(-170, this);
         popupWindow.showAsDropDown(v, xoff, yoff);
+
+        orderButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(final View view) {
+                orderPopup(v, orderIcon);
+            }
+        });
+        groupButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(final View view) {
+                groupPopup(v, groupIcon);
+            }
+        });
+    }
+
+    private void orderPopup(View view, final ImageView icon) {
+        PopupWindow popupWindow = new OrderOptionsPopup(this, view).getPopup();
+        icon.setImageResource(R.drawable.ic_expanded_white);
+        int xoff = DisplayPixelScale.getDP(-190, this);
+        int yoff = DisplayPixelScale.getDP(-220, this);
+        popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+            @Override
+            public void onDismiss() {
+                icon.setImageResource(R.drawable.ic_expand_more_white);
+            }
+        });
+        popupWindow.showAsDropDown(view, xoff, yoff);
+    }
+
+    private void groupPopup(View view, final ImageView icon) {
+        PopupWindow popupWindow = new GroupOptionsPopup(this, view).getPopup();
+        icon.setImageResource(R.drawable.ic_expanded_white);
+        int xoff = DisplayPixelScale.getDP(-190, this);
+        int yoff = DisplayPixelScale.getDP(-220, this);
+        popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+            @Override
+            public void onDismiss() {
+                icon.setImageResource(R.drawable.ic_expand_more_white);
+            }
+        });
+        popupWindow.showAsDropDown(view, xoff, yoff);
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////

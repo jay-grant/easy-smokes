@@ -12,6 +12,7 @@ import android.widget.RelativeLayout;
 
 import com.crayon.easysmokes.R;
 import com.crayon.easysmokes.RemoveFavouritesActivity;
+import com.crayon.easysmokes.builder.DisplayPixelScale;
 
 import static android.view.View.GONE;
 
@@ -45,8 +46,8 @@ public class FavouritesOptionPopup {
                 ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         popupWindow.setFocusable(true);
 
-        RelativeLayout orderButton = (RelativeLayout) container.findViewById(R.id.FavouriteOption_order);
-        RelativeLayout groupButton = (RelativeLayout) container.findViewById(R.id.FavouriteOption_group);
+        final RelativeLayout orderButton = (RelativeLayout) container.findViewById(R.id.FavouriteOption_order);
+        final RelativeLayout groupButton = (RelativeLayout) container.findViewById(R.id.FavouriteOption_group);
         RelativeLayout removeButton = (RelativeLayout) container.findViewById(R.id.FavouriteOption_remove);
 
         if (!hasFavs) {
@@ -62,8 +63,6 @@ public class FavouritesOptionPopup {
                 }
             });
         }
-
-
 
         return popupWindow;
     }
