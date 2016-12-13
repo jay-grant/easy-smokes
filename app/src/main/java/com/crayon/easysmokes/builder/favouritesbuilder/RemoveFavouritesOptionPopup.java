@@ -67,7 +67,6 @@ public class RemoveFavouritesOptionPopup {
             @Override
             public void onClick(View view) {
                 boolean shutdown = false;
-                System.out.println("QUEUE SIZE, FAVCOUNT: " + queue.size() + ", " + favCount);
                 if (queue.size() >= favCount) {
                     shutdown = true;
                 }

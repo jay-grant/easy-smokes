@@ -1,22 +1,18 @@
 package com.crayon.easysmokes;
 
-import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 
 import com.crayon.easysmokes.builder.DisplayPixelScale;
-import com.crayon.easysmokes.builder.RemoveFavCursorAdapter;
+import com.crayon.easysmokes.builder.favouritesbuilder.RemoveFavCursorAdapter;
 import com.crayon.easysmokes.builder.favouritesbuilder.RemoveFavouritesOptionPopup;
 import com.crayon.easysmokes.data.DataBase;
-import com.crayon.easysmokes.data.sqlimports.NadeData;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,7 +25,7 @@ public class RemoveFavouritesActivity extends AppCompatActivity {
         this.queue = queue;
         final ListView listView = (ListView) findViewById(R.id.remove_favourites_listview);
         final DataBase dataBase = new DataBase(this);
-        final Cursor cursor = dataBase.getFavourites();
+        final Cursor cursor = dataBase.getFavourites(this);
         final int count = cursor.getCount();
         RemoveFavCursorAdapter adapter = new RemoveFavCursorAdapter(this, cursor, queue);
         listView.setAdapter(adapter);
@@ -42,7 +38,7 @@ public class RemoveFavouritesActivity extends AppCompatActivity {
 
         final ListView listView = (ListView) findViewById(R.id.remove_favourites_listview);
         final DataBase dataBase = new DataBase(this);
-        final Cursor cursor = dataBase.getFavourites();
+        final Cursor cursor = dataBase.getFavourites(this);
         final int count = cursor.getCount();
 
         RemoveFavCursorAdapter adapter = new RemoveFavCursorAdapter(this, cursor, queue);

@@ -1,4 +1,4 @@
-package com.crayon.easysmokes.builder;
+package com.crayon.easysmokes.builder.favouritesbuilder;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import com.crayon.easysmokes.FavouritesActivity;
 import com.crayon.easysmokes.R;
+import com.crayon.easysmokes.builder.AestheticFormat;
 import com.crayon.easysmokes.data.DataBase;
 import com.crayon.easysmokes.data.sqlimports.NadeData;
 

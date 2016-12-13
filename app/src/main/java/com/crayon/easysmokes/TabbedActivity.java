@@ -10,7 +10,6 @@ import android.widget.TextView;
 import com.crayon.easysmokes.data.DataBase;
 import com.crayon.easysmokes.data.sqlimports.SideData;
 import com.crayon.easysmokes.model.BundleKey;
-import com.crayon.easysmokes.model.SideType;
 import com.crayon.easysmokes.model.TabBuilder;
 
 import java.util.List;

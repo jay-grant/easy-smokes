@@ -1,18 +1,12 @@
 package com.crayon.easysmokes;
 
-import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -20,13 +14,11 @@ import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 
 import com.crayon.easysmokes.builder.DisplayPixelScale;
-import com.crayon.easysmokes.builder.FavCursorAdapter;
+import com.crayon.easysmokes.builder.favouritesbuilder.FavCursorAdapter;
 import com.crayon.easysmokes.builder.favouritesbuilder.FavouritesOptionPopup;
 import com.crayon.easysmokes.builder.favouritesbuilder.GroupOptionsPopup;
 import com.crayon.easysmokes.builder.favouritesbuilder.OrderOptionsPopup;
-import com.crayon.easysmokes.data.Data;
 import com.crayon.easysmokes.data.DataBase;
-import com.crayon.easysmokes.model.Nade;
 
 import static android.view.View.GONE;
 
@@ -38,6 +30,14 @@ public class FavouritesActivity extends AppCompatActivity {
         super.onRestart();
     }
 
+    public void refresh() {
+        ListView listView = (ListView) findViewById(R.id.FavouritesActivity_ListView);
+        DataBase database = new DataBase(this);
+        Cursor cursor = database.getFavourites(this);
+        FavCursorAdapter adapter = new FavCursorAdapter(this, cursor);
+        listView.setAdapter(adapter);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,7 +47,7 @@ public class FavouritesActivity extends AppCompatActivity {
 //                .getSharedPreferences(String.valueOf(SharedPrefsKey.FAV_SETTINGS), Context.MODE_PRIVATE);
         ListView listView = (ListView) findViewById(R.id.FavouritesActivity_ListView);
         DataBase database = new DataBase(this);
-        Cursor cursor = database.getFavourites();
+        Cursor cursor = database.getFavourites(this);
         FavCursorAdapter adapter = new FavCursorAdapter(this, cursor);
         listView.setAdapter(adapter);
         final boolean hasFavs = cursor.getCount() > 0;
@@ -131,51 +131,4 @@ public class FavouritesActivity extends AppCompatActivity {
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////
-
-    private void removeAllDialog(final Context context, final SharedPreferences sharedPreferences) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        LayoutInflater layoutInflater = LayoutInflater.from(context);
-        View view = layoutInflater.inflate(R.layout.dialog_remove_all_favs, null);
-        builder.setCustomTitle(view);
-        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-                sharedPreferences.edit().clear().apply();
-
-                finish();
-                startActivity(new Intent(context, FavouritesActivity.class));
-                dialog.dismiss();
-            }
-        });
-        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-                dialog.dismiss();
-            }
-        });
-        AlertDialog dialog = builder.create();
-        dialog.show();
-    }
-
-    public static void removeFavouriteDialog(final Context context,
-                                             final SharedPreferences sharedPreferences, final Nade nade) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        LayoutInflater layoutInflater = LayoutInflater.from(context);
-        View view = layoutInflater.inflate(R.layout.dialog_remove_single_fav, null);
-        builder.setCustomTitle(view);
-        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-                Activity owner = (Activity) context;
-                owner.finish();
-                sharedPreferences.edit().remove(nade.getId()).apply();
-                owner.startActivity(new Intent(context, FavouritesActivity.class));
-                dialog.dismiss();
-            }
-        });
-        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-                dialog.dismiss();
-            }
-        });
-        AlertDialog dialog = builder.create();
-        dialog.show();
-    }
 }

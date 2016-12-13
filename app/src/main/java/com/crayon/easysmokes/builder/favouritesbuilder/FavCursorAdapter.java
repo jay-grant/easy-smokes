@@ -1,31 +1,19 @@
-package com.crayon.easysmokes.builder;
+package com.crayon.easysmokes.builder.favouritesbuilder;
 
 import android.content.Context;
-import android.content.Intent;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.graphics.PorterDuff;
-import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.CursorAdapter;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.crayon.easysmokes.FavouritesActivity;
 import com.crayon.easysmokes.R;
-import com.crayon.easysmokes.SwipeLauncher;
-import com.crayon.easysmokes.data.DataBase;
-import com.crayon.easysmokes.data.sqlimports.FavData;
+import com.crayon.easysmokes.builder.AestheticFormat;
+import com.crayon.easysmokes.builder.NadeTouchListener;
 import com.crayon.easysmokes.data.sqlimports.NadeData;
-import com.crayon.easysmokes.model.BundleKey;
-import com.crayon.easysmokes.model.Nade;
-
-import org.w3c.dom.Text;
 
 /**
  * Created by Jay on 9/12/2016.

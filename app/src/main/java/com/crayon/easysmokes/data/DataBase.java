@@ -2,6 +2,7 @@ package com.crayon.easysmokes.data;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -168,7 +169,7 @@ public class DataBase extends SQLiteOpenHelper {
     }
 
     public static String joinOn(String table1, String att1, String table2, String att2) {
-        return " JOIN " + table2 + " ON " + table1 + "." + att1 + "=" + table2 + "." + att2;
+        return " INNER JOIN " + table2 + " ON " + table1 + "." + att1 + "=" + table2 + "." + att2;
     }
 
     public boolean isFavourited(String nadeID) {
@@ -208,11 +209,26 @@ public class DataBase extends SQLiteOpenHelper {
         return count;
     }
 
-    public Cursor getFavourites() {
+    public Cursor getFavourites(Context context) {
+
         SQLiteDatabase reader = this.getReadableDatabase();
-        String query = DataBase.selectRowString(NadeData.TABLE_NAME)
-                + DataBase.joinOn(NadeData.TABLE_NAME, NadeData.ATT_ID, FavData.TABLE_NAME, FavData.ATT_NADE);
-        Cursor cursor = reader.rawQuery(query, null);
+        StringBuilder queryBuilder = new StringBuilder();
+        queryBuilder.append(DataBase.selectRowString(NadeData.TABLE_NAME))
+                .append(DataBase.joinOn(NadeData.TABLE_NAME, NadeData.ATT_ID, FavData.TABLE_NAME, FavData.ATT_NADE));
+
+        SharedPreferences settings = context.getApplicationContext().getSharedPreferences(SharedPrefsKey.FAV_SETTINGS.toString(), Context.MODE_PRIVATE);
+        String orderPref = settings.getString(SharedPrefsKey.FAV_ORDER.toString(), FavouriteOrderKeys.NEWEST.toString());
+        String groupPref = settings.getString(SharedPrefsKey.FAV_GROUP.toString(), FavouriteGroupKeys.NONE.toString());
+        if (orderPref.equals(FavouriteOrderKeys.OLDEST.toString())) {
+
+        }
+        if (groupPref.equals(FavouriteGroupKeys.LEVEL.toString())) {
+            queryBuilder.append(" ORDER BY nades." + NadeData.ATT_LEVEL);
+        } else if (groupPref.equals(FavouriteGroupKeys.SIDE.toString())) {
+            queryBuilder.append(" ORDER BY nades." + NadeData.ATT_SIDE);
+        }
+
+        Cursor cursor = reader.rawQuery(queryBuilder.toString(), null);
         return cursor;
     }
 }

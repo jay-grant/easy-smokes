@@ -1,25 +1,14 @@
 package com.crayon.easysmokes.data;
 
 import android.content.Context;
-import android.content.SharedPreferences;
-import android.content.res.Resources;
-
-import com.crayon.easysmokes.model.LevelName;
-import com.crayon.easysmokes.model.Nade;
-import com.crayon.easysmokes.model.NadeImage;
-import com.crayon.easysmokes.model.SideType;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 public class Data {
 
