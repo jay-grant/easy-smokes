@@ -59,7 +59,6 @@ public class RemoveFavouritesOptionPopup {
                     queue.add(nadeID);
                 }
                 ((RemoveFavouritesActivity) context).refresh(queue);
-                popupWindow.dismiss();
             }
         });
 

@@ -14,6 +14,7 @@ public class NadeData extends SQLInsertionHelper {
     public static final String ATT_LEVEL = "nadeLevel";
     public static final String ATT_SIDE = "nadeSide";
     public static final String ATT_DEMOCOUNT = "demoCount";
+    public static final String ATT_FAVORDER = "favOrder";
 
     @Override
     public void execute(int count, String column, ContentValues values) {

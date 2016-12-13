@@ -21,18 +21,10 @@ CREATE TABLE nades
     nadeLevel CHAR(25) NOT NULL,
     nadeSide CHAR(25) NOT NULL,
     demoCount INT(2) NOT NULL,
+    favOrder INT(3) DEFAULT NULL,
     PRIMARY KEY (_id),
     CONSTRAINT fk_NadeLevel FOREIGN KEY (nadeLevel) REFERENCES levels(_id),
     CONSTRAINT fk_NadeSide FOREIGN KEY (nadeSide) REFERENCES sides(_id)
-);
-
-CREATE TABLE favs
-(
-    _id CHAR(3),
-    orderCounter INT(3),
-    PRIMARY KEY (_id),
-    CONSTRAINT fk_FavouritesNadeID FOREIGN KEY (_id) REFERENCES nades(_id),
-    UNIQUE (orderCounter)
 );
 
 CREATE TABLE demos

@@ -9,15 +9,12 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import com.crayon.easysmokes.R;
 import com.crayon.easysmokes.data.sqlimports.DemoData;
-import com.crayon.easysmokes.data.sqlimports.FavData;
 import com.crayon.easysmokes.data.sqlimports.LevelData;
 import com.crayon.easysmokes.data.sqlimports.NadeData;
 import com.crayon.easysmokes.data.sqlimports.SQLInsertionHelper;
 import com.crayon.easysmokes.data.sqlimports.SideData;
 
-import java.sql.SQLData;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -45,7 +42,6 @@ public class DataBase extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase database, int i, int i1) {
         database.execSQL("DROP TABLE IF EXISTS " + DemoData.TABLE_NAME);
-        database.execSQL("DROP TABLE IF EXISTS " + FavData.TABLE_NAME);
         database.execSQL("DROP TABLE IF EXISTS " + NadeData.TABLE_NAME);
         database.execSQL("DROP TABLE IF EXISTS " + LevelData.TABLE_NAME);
         database.execSQL("DROP TABLE IF EXISTS " + SideData.TABLE_NAME);
@@ -174,8 +170,9 @@ public class DataBase extends SQLiteOpenHelper {
 
     public boolean isFavourited(String nadeID) {
         SQLiteDatabase database = this.getReadableDatabase();
-        Cursor row = database.rawQuery(selectRowString(FavData.TABLE_NAME)
-                + " " + whereString(FavData.ATT_NADE, toSQLString(nadeID)), null);
+        Cursor row = database.rawQuery("SELECT * FROM " + NadeData.TABLE_NAME
+                + " WHERE " + NadeData.ATT_ID + "=" + toSQLString(nadeID)
+                + " AND " + NadeData.ATT_FAVORDER + " IS NOT NULL", null);
         boolean exists = !(row.getCount() <= 0);
         row.close();
         database.close();
@@ -183,18 +180,20 @@ public class DataBase extends SQLiteOpenHelper {
     }
 
     public void addFavourite(String nadeID) {
-        SQLiteDatabase database = this.getReadableDatabase();
-        ContentValues contentValues = new ContentValues();
-        contentValues.put(FavData.ATT_NADE, nadeID);
-        database.insert(FavData.TABLE_NAME, null, contentValues);
+        SQLiteDatabase database = this.getWritableDatabase();
+        int count = database.rawQuery("SELECT * FROM " + NadeData.TABLE_NAME
+                + " WHERE " + NadeData.ATT_FAVORDER + " IS NOT NULL", null).getCount();
+        database.execSQL("UPDATE " + NadeData.TABLE_NAME
+                + " SET " + NadeData.ATT_FAVORDER + "=" + (count + 1)
+                + " WHERE " + NadeData.ATT_ID + "=" + toSQLString(nadeID));
         database.close();
     }
 
     public void removeFavourite(String nadeID) {
         SQLiteDatabase database = this.getWritableDatabase();
-        String query = "DELETE FROM " + FavData.TABLE_NAME
-                + " WHERE " + FavData.ATT_NADE + "=" + toSQLString(nadeID);
-        database.execSQL(query);
+        database.execSQL("UPDATE " + NadeData.TABLE_NAME
+                + " SET " + NadeData.ATT_FAVORDER + "=NULL"
+                + " WHERE " + NadeData.ATT_ID + "=" + toSQLString(nadeID));
         database.close();
     }
 
@@ -213,20 +212,26 @@ public class DataBase extends SQLiteOpenHelper {
 
         SQLiteDatabase reader = this.getReadableDatabase();
         StringBuilder queryBuilder = new StringBuilder();
-        queryBuilder.append(DataBase.selectRowString(NadeData.TABLE_NAME))
-                .append(DataBase.joinOn(NadeData.TABLE_NAME, NadeData.ATT_ID, FavData.TABLE_NAME, FavData.ATT_NADE));
 
-        SharedPreferences settings = context.getApplicationContext().getSharedPreferences(SharedPrefsKey.FAV_SETTINGS.toString(), Context.MODE_PRIVATE);
-        String orderPref = settings.getString(SharedPrefsKey.FAV_ORDER.toString(), FavouriteOrderKeys.NEWEST.toString());
-        String groupPref = settings.getString(SharedPrefsKey.FAV_GROUP.toString(), FavouriteGroupKeys.NONE.toString());
-        if (orderPref.equals(FavouriteOrderKeys.OLDEST.toString())) {
+        queryBuilder.append("SELECT * FROM " + NadeData.TABLE_NAME +" WHERE " + NadeData.ATT_FAVORDER + " IS NOT NULL")
+                .append(" ORDER BY " + NadeData.ATT_FAVORDER);
 
+        SharedPreferences sharedPreferences = context.getApplicationContext()
+                .getSharedPreferences(SharedPrefsKey.FAV_SETTINGS.toString(), Context.MODE_PRIVATE);
+        String orderSetting = sharedPreferences
+                .getString(SharedPrefsKey.FAV_ORDER.toString(), FavouriteOrderKeys.NEWEST.toString());
+        String groupSetting = sharedPreferences
+                .getString(SharedPrefsKey.FAV_GROUP.toString(), FavouriteGroupKeys.NONE.toString());
+        if (orderSetting.equals(FavouriteOrderKeys.OLDEST.toString())) {
+            queryBuilder.append(" DESC");
         }
-        if (groupPref.equals(FavouriteGroupKeys.LEVEL.toString())) {
-            queryBuilder.append(" ORDER BY nades." + NadeData.ATT_LEVEL);
-        } else if (groupPref.equals(FavouriteGroupKeys.SIDE.toString())) {
-            queryBuilder.append(" ORDER BY nades." + NadeData.ATT_SIDE);
+        if (groupSetting.equals(FavouriteGroupKeys.LEVEL.toString())) {
+            queryBuilder.append(", " + NadeData.ATT_LEVEL);
+        } else if (groupSetting.equals(FavouriteGroupKeys.SIDE.toString())) {
+            queryBuilder.append(", " + NadeData.ATT_SIDE);
         }
+
+        System.out.println("QUERY: " + queryBuilder.toString());
 
         Cursor cursor = reader.rawQuery(queryBuilder.toString(), null);
         return cursor;
