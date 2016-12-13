@@ -7,7 +7,10 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.crayon.easysmokes.R;
 
@@ -18,9 +21,10 @@ public class HomeScreenButton {
 
         LayoutInflater layoutInflater = LayoutInflater.from(context);
         View view = layoutInflater.inflate(R.layout.button_home, null);
-        Button buttonMain = (Button) view.findViewById(R.id.home_button_main);
-        Button buttonIcon = (Button) view.findViewById(R.id.home_button_icon);
-        Button buttonLine = (Button) view.findViewById(R.id.home_button_line);
+        RelativeLayout buttonMain = (RelativeLayout) view.findViewById(R.id.HomeButton_main);
+        TextView textView = (TextView) view.findViewById(R.id.HomeButton_text);
+        ImageView buttonLine = (ImageView) view.findViewById(R.id.HomeButton_line);
+        ImageView buttonIcon = (ImageView) view.findViewById(R.id.HomeButton_icon);
 
         if (isBottomLine) {
             buttonLine.setVisibility(View.INVISIBLE);
@@ -28,19 +32,17 @@ public class HomeScreenButton {
 
         buttonIcon.setBackgroundResource(iconResId);
 
-        buttonMain.setText(text);
+        textView.setText(text);
 
         listener(context, view, buttonMain, buttonMain, cls);
-        listener(context, view, buttonIcon, buttonMain, cls);
-        listener(context, view, buttonLine, buttonMain, cls);
 
         layout.addView(view);
     }
 
 
     private void listener(final Context context, final View view,
-                          Button button,
-                          final Button buttonPress, final Class cls) {
+                          View button,
+                          final View buttonPress, final Class cls) {
 
         button.setOnTouchListener(new View.OnTouchListener() {
             int grey = context.getResources().getColor(R.color.colorPrimary);
@@ -49,7 +51,7 @@ public class HomeScreenButton {
             public boolean onTouch(View v, MotionEvent event) {
                 switch (event.getAction()) {
                     case MotionEvent.ACTION_DOWN: {
-                        Button buttonInstance = (Button) view.findViewById(buttonPress.getId());
+                        View buttonInstance = view.findViewById(buttonPress.getId());
                         buttonInstance.getBackground()
                                 .setColorFilter(grey, PorterDuff.Mode.SRC_ATOP);
                         buttonInstance.invalidate();
@@ -60,7 +62,7 @@ public class HomeScreenButton {
 
                         v.getBackground().clearColorFilter();
                     case MotionEvent.ACTION_CANCEL: {
-                        Button buttonInstance = (Button) view.findViewById(buttonPress.getId());
+                        View buttonInstance = view.findViewById(buttonPress.getId());
                         buttonInstance.getBackground().clearColorFilter();
                         buttonInstance.invalidate();
                         break;

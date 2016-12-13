@@ -1,33 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:gravity="bottom">
+    android:layout_height="90sp"
+    android:id="@+id/HomeButton_main"
+    android:gravity="bottom"
+    android:background="@color/colorPrimaryDark">
 
-    <Button
-        android:id="@+id/home_button_main"
-        android:layout_width="fill_parent"
-        android:layout_height="90dp"
-        android:textSize="16sp"
-        android:textAllCaps="false"
+    <TextView
+        android:id="@+id/HomeButton_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_alignParentStart="true"
+        android:paddingStart="90sp"
+        android:paddingEnd="0sp"
         android:textColor="@color/white"
-        android:gravity="start|center_vertical"
-        android:paddingStart="90dp"
-        android:background="@drawable/background_primary_dark" />
+        android:text="@string/app_name_spaced"/>
 
-    <Button
-        android:id="@+id/home_button_icon"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+    <ImageView
+        android:id="@+id/HomeButton_icon"
+        android:layout_width="40sp"
+        android:layout_height="40sp"
         android:gravity="center_vertical"
-        android:layout_marginTop="25dp"
-        android:layout_marginStart="25dp" />
+        android:layout_centerVertical="true"
+        android:layout_marginStart="25sp"
+        android:layout_alignParentStart="true"/>
 
-    <Button
-        android:id="@+id/home_button_line"
+    <ImageView
+        android:id="@+id/HomeButton_line"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@drawable/shape_gradient_fade_blue"
-        android:layout_marginTop="89dp" />
+        android:layout_marginTop="89sp" />
 
 </RelativeLayout>

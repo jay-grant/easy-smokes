@@ -24,11 +24,11 @@ public class HomeActivity extends AppCompatActivity {
         LinearLayout layout = (LinearLayout) findViewById(R.id.HomeActivity_LinearLayout);
 
 //        Constructing Buttons
-        new HomeScreenButton(AestheticFormat.vapour("Maps"), this, LevelsActivity.class, layout, R.drawable.ic_home_maps, false);
-        new HomeScreenButton(AestheticFormat.vapour("Favourites"), this, FavouritesActivity.class, layout, R.drawable.ic_home_favourites, false);
-        new HomeScreenButton(AestheticFormat.vapour("Settings"), this, SettingsActivity.class, layout, R.drawable.ic_home_settings, true);
-
-        DataBase dataBase = new DataBase(this);
-//        dataBase.printTables();
+        new HomeScreenButton(AestheticFormat.vapour("Maps"), this, LevelsActivity.class,
+                layout, R.drawable.ic_home_maps, false);
+        new HomeScreenButton(AestheticFormat.vapour("Favourites"), this, FavouritesActivity.class,
+                layout, R.drawable.ic_home_favourites, false);
+        new HomeScreenButton(AestheticFormat.vapour("Settings"), this, SettingsActivity.class,
+                layout, R.drawable.ic_home_settings, true);
     }
 }
