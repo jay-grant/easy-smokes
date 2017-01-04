@@ -29,6 +29,7 @@ public class HomeScreenButton {
         if (isBottomLine) {
             buttonLine.setVisibility(View.INVISIBLE);
         }
+        buttonMain.getBackground().setAlpha(0);
 
         buttonIcon.setBackgroundResource(iconResId);
 
@@ -52,8 +53,7 @@ public class HomeScreenButton {
                 switch (event.getAction()) {
                     case MotionEvent.ACTION_DOWN: {
                         View buttonInstance = view.findViewById(buttonPress.getId());
-                        buttonInstance.getBackground()
-                                .setColorFilter(grey, PorterDuff.Mode.SRC_ATOP);
+                        buttonInstance.getBackground().setAlpha(255);
                         buttonInstance.invalidate();
                         break;
                     }
@@ -63,7 +63,7 @@ public class HomeScreenButton {
                         v.getBackground().clearColorFilter();
                     case MotionEvent.ACTION_CANCEL: {
                         View buttonInstance = view.findViewById(buttonPress.getId());
-                        buttonInstance.getBackground().clearColorFilter();
+                        buttonInstance.getBackground().setAlpha(0);
                         buttonInstance.invalidate();
                         break;
                     }

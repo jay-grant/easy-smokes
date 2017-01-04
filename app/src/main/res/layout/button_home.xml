@@ -4,7 +4,7 @@
     android:layout_height="90sp"
     android:id="@+id/HomeButton_main"
     android:gravity="bottom"
-    android:background="@color/colorPrimaryDark">
+    android:background="@color/colorPrimaryLight">
 
     <TextView
         android:id="@+id/HomeButton_text"
